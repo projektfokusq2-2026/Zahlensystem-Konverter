@@ -41,28 +41,41 @@ def hexadecimal_to_decimal():
             Ergebnis_buchstabe = zuordnung[buchstabe] * 16 ** index
             result = result + Ergebnis_buchstabe
     
-    label_ergebnis2.configure(text=f"Dezimal: {result}")  
+    label_ergebnis2.configure(text=f"Dezimal: {result}")
+
+def decimal_to_binary():
+    decimal = int(eingabe_feld3.get()) 
+    if decimal == 0:
+        label_ergebnis3.configure(text=f"Binär: 0")
+        return
+    result = ""
+    while decimal > 0:
+        rest = decimal % 2
+        result = str(rest) + result
+        decimal = decimal // 2
+
+    label_ergebnis3.configure(text=f"Binär : {result}")    
 
 ctk.set_appearance_mode("Dark")     
                            
 root = ctk.CTk()
 root.title("Dezimal - Hexadezimal - Umrechner")
-root.geometry("450x700")
+root.geometry("450x900")
 root.configure(fg_color="#000000")
 
 title_label = ctk.CTkLabel(
     root,
     text = "Zahlensystem-Konverter",
     font=("Impact", 24),
-    text_color="#6E0A0A"
+    text_color="#FF4D4D"
 )    
 title_label.pack(pady=5)
 
 label_anweisung1 = ctk.CTkLabel(
     root, 
-    text="Gebe Dezimal ein:", 
-    font=("Courier New", 14, "bold"), 
-    text_color="#888899"
+    text="Dezimal -> Hexadezimal", 
+    font=("Courier New", 18, "bold"), 
+    text_color="#FFFFFF"
 )
 label_anweisung1.pack(pady=5)
 
@@ -101,15 +114,15 @@ label_ergebnis1 = ctk.CTkLabel(
     root, 
     text="Warte auf Eingabe", 
     font=("Courier New", 20, "bold"), 
-    text_color="#FFFFFF" 
+    text_color="#2ECC71" 
 )
 label_ergebnis1.pack(pady=25)
 
 label_anweisung2 = ctk.CTkLabel(
     root, 
-    text="Gebe Hexadezimal ein:", 
-    font=("Courier New", 14, "bold"), 
-    text_color="#888899"
+    text="Hexadezimal -> Dezimal", 
+    font=("Courier New", 18, "bold"), 
+    text_color="#FFFFFF"
 )
 label_anweisung2.pack(pady=5)
 
@@ -148,8 +161,55 @@ label_ergebnis2 = ctk.CTkLabel(
     root, 
     text="Warte auf Eingabe", 
     font=("Courier New", 20, "bold"), 
-    text_color="#FFFFFF" 
+    text_color="#2ECC71" 
 )
 label_ergebnis2.pack(pady=25)
+
+label_anweisung3 = ctk.CTkLabel(
+    root, 
+    text="Dezimal -> Binär", 
+    font=("Courier New", 18, "bold"), 
+    text_color="#FFFFFF"
+)
+label_anweisung3.pack(pady=5)
+
+eingabe_feld3 = ctk.CTkEntry(
+    root, 
+    placeholder_text="Dezimal",
+    font=("Courier New", 16, "bold"),
+    width=280,
+    height=45,
+    corner_radius=20,
+    border_width=3,
+    border_color="#FF0000",     
+    fg_color="#1A1A24",        
+    text_color="#FFFFFF",       
+    placeholder_text_color="#555566"
+)
+eingabe_feld3.pack(pady=15)
+
+button_berechnen3 = ctk.CTkButton(
+    root, 
+    text="Berechnen", 
+    font=("Impact", 14),
+    width=320,
+    height=50,
+    corner_radius=25,
+    border_width=2,
+    border_color="#FF0000",    
+    fg_color="#6E0A0A",         
+    hover_color="#FF0000",      
+    text_color="#FFFFFF"        
+)
+button_berechnen3.configure(command=decimal_to_binary)
+button_berechnen3.pack(pady=20)
+
+label_ergebnis3 = ctk.CTkLabel(
+    root, 
+    text="Warte auf Eingabe", 
+    font=("Courier New", 20, "bold"), 
+    text_color="#2ECC71" 
+)
+label_ergebnis3.pack(pady=25)
 
 root.mainloop()
