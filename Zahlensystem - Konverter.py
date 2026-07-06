@@ -1,60 +1,73 @@
 import customtkinter as ctk
 
 def decimal_to_hexadecimal():
-    decimal = int(eingabe_feld1.get())
-    if decimal == 0:
-        label_ergebnis1.configure(text=f"Hexadezimal: 0")
-        return
-    letters = ["A", "B", "C", "D", "E", "F"]
-    numbers = [10, 11, 12, 13, 14, 15] 
-    zuordnung = {}
-    for letter, number in zip(letters, numbers):
-        zuordnung[number] = letter
-    result = ""    
-    while decimal > 0:
-        rest = decimal % 16
-        if rest >= 10:
-            final = zuordnung[rest]
-        else:
-            final = str(rest)
-        result = final + result
-        decimal = decimal // 16    
-              
-    label_ergebnis1.configure(text=f"Hexadezimal: {result}")
+    try:
+        decimal = int(eingabe_feld1.get())
+        if decimal == 0:
+            label_ergebnis1.configure(text=f"Hexadezimal: 0")
+            return
+        letters = ["A", "B", "C", "D", "E", "F"]
+        numbers = [10, 11, 12, 13, 14, 15] 
+        zuordnung = {}
+        for letter, number in zip(letters, numbers):
+            zuordnung[number] = letter
+        result = ""    
+        while decimal > 0:
+            rest = decimal % 16
+            if rest >= 10:
+                final = zuordnung[rest]
+            else:
+                final = str(rest)
+            result = final + result
+            decimal = decimal // 16    
+                
+        label_ergebnis1.configure(text=f"Hexadezimal: {result}")
+    except:
+        label_ergebnis1.configure(text="Ungültige Eingabe!")   
 
 def hexadecimal_to_decimal():
-    hexadecimal = str(eingabe_feld2.get()).upper()
-    if hexadecimal == "0":
-        label_ergebnis2.configure(text=f"Dezimal: 0")
-        return
-    letters = ["A", "B", "C", "D", "E", "F"]
-    numbers = [10, 11, 12, 13, 14, 15] 
-    zuordnung = {}
-    for letter, number in zip(letters, numbers):
-        zuordnung[letter] = number    
-    result = 0
-    for index, buchstabe in enumerate(reversed(hexadecimal)):
-        if buchstabe.isdigit() == True:
-            Ergebnis_dezimal = int(buchstabe) * 16 ** index
-            result = result + Ergebnis_dezimal
-        elif buchstabe.isalpha() == True:
-            Ergebnis_buchstabe = zuordnung[buchstabe] * 16 ** index
-            result = result + Ergebnis_buchstabe
-    
-    label_ergebnis2.configure(text=f"Dezimal: {result}")
+    try:    
+        hexadecimal = str(eingabe_feld2.get()).upper().strip()
+        if hexadecimal == "0":
+            label_ergebnis2.configure(text=f"Dezimal: 0")
+            return
+        if not hexadecimal:
+            raise ValueError
+        letters = ["A", "B", "C", "D", "E", "F"]
+        numbers = [10, 11, 12, 13, 14, 15] 
+        zuordnung = {}
+        for letter, number in zip(letters, numbers):
+            zuordnung[letter] = number    
+        result = 0
+        for index, buchstabe in enumerate(reversed(hexadecimal)):
+            if buchstabe.isdigit():
+                Ergebnis_dezimal = int(buchstabe) * 16 ** index
+                result = result + Ergebnis_dezimal
+            elif buchstabe.isalpha() and buchstabe in zuordnung:
+                Ergebnis_buchstabe = zuordnung[buchstabe] * 16 ** index
+                result = result + Ergebnis_buchstabe
+            else:
+                raise ValueError    
+        
+        label_ergebnis2.configure(text=f"Dezimal: {result}")
+    except:
+        label_ergebnis2.configure(text="Ungültige Eingabe!")    
 
 def decimal_to_binary():
-    decimal = int(eingabe_feld3.get()) 
-    if decimal == 0:
-        label_ergebnis3.configure(text=f"Binär: 0")
-        return
-    result = ""
-    while decimal > 0:
-        rest = decimal % 2
-        result = str(rest) + result
-        decimal = decimal // 2
+    try:    
+        decimal = int(eingabe_feld3.get()) 
+        if decimal == 0:
+            label_ergebnis3.configure(text=f"Binär: 0")
+            return
+        result = ""
+        while decimal > 0:
+            rest = decimal % 2
+            result = str(rest) + result
+            decimal = decimal // 2
 
-    label_ergebnis3.configure(text=f"Binär : {result}")    
+        label_ergebnis3.configure(text=f"Binär : {result}")
+    except:
+        label_ergebnis3.configure(text="Ungültige Eingabe!")        
 
 ctk.set_appearance_mode("Dark")     
                            
